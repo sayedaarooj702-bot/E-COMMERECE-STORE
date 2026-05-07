@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --rose:#E8517A;--rose-light:#F7A8C0;--rose-dark:#C0335A;
+  --blush:#FFF0F4;--blush2:#FFE3EC;--cream:#FBF7F4;
+  --gold:#D4A853;--gold-light:#F5E6C8;
+  --dark:#1C1218;--mid:#6B4C5E;--muted:#B09AA8;
+  --white:#fff;
+  --ff-head:'Playfair Display',serif;
+  --ff-body:'Nunito',sans-serif;
+}
+body{font-family:var(--ff-body);background:var(--cream);color:var(--dark);overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--blush2);
+  padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px;
+}
+.logo-wrap{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-icon{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--rose-light));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(232,81,122,.35);
+  position:relative;overflow:hidden;
+}
+.logo-icon::after{
+  content:'✿';font-size:18px;color:#fff;line-height:1;
+}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-main{font-family:var(--ff-head);font-size:1.5rem;font-weight:900;color:var(--rose);letter-spacing:-0.5px;font-style:italic}
+.logo-sub{font-size:.6rem;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:-2px}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--mid);text-decoration:none;font-size:.88rem;font-weight:600;cursor:pointer;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--rose);border-radius:2px;transition:width .25s}
+.nav-links a:hover,.nav-links a.active{color:var(--rose)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.cart-btn{
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;border:none;padding:.5rem 1.3rem;border-radius:100px;
+  font-family:var(--ff-body);font-size:.85rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:0 4px 14px rgba(232,81,122,.4);transition:all .2s;
+}
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,81,122,.5)}
+.badge{background:#fff;color:var(--rose);border-radius:50%;width:20px;height:20px;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ── HERO ── */
+.hero{
+  min-height:92vh;display:flex;align-items:center;
+  background:linear-gradient(135deg,#fff5f8 0%,#fff0f4 40%,#fce8ef 100%);
+  position:relative;overflow:hidden;padding:3rem 2rem;
+}
+.hero::before{
+  content:'';position:absolute;top:-100px;right:-100px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,81,122,.12),transparent 65%);
+}
+.hero::after{
+  content:'';position:absolute;bottom:-80px;left:-60px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,83,.1),transparent 65%);
+}
+.hero-content{max-width:560px;z-index:2}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,var(--rose-light),var(--rose));
+  color:#fff;padding:.35rem 1rem;border-radius:100px;
+  font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:1.8rem;
+}
+.hero h1{
+  font-family:var(--ff-head);font-size:clamp(2.4rem,5.5vw,4.2rem);
+  font-weight:900;color:var(--dark);line-height:1.1;margin-bottom:1.4rem;
+}
+.hero h1 em{color:var(--rose);font-style:italic}
+.hero p{color:var(--mid);font-size:1.05rem;line-height:1.8;margin-bottom:2.5rem;max-width:440px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-rose{
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;border:none;padding:.9rem 2.2rem;border-radius:100px;
+  font-family:var(--ff-body);font-size:.95rem;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 20px rgba(232,81,122,.4);transition:all .25s;
+}
+.btn-rose:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(232,81,122,.5)}
+.btn-outline-rose{
+  background:transparent;color:var(--rose);
+  border:2px solid var(--rose-light);padding:.9rem 2.2rem;border-radius:100px;
+  font-family:var(--ff-body);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;
+}
+.btn-outline-rose:hover{background:var(--blush);border-color:var(--rose)}
+.hero-imgs{
+  position:absolute;right:3%;top:50%;transform:translateY(-50%);
+  display:grid;grid-template-columns:140px 140px;gap:14px;z-index:2;
+}
+.hero-img-card{border-radius:18px;overflow:hidden;box-shadow:0 12px 32px rgba(28,18,24,.15)}
+.hero-img-card img{width:100%;height:160px;object-fit:cover;display:block}
+.hero-img-card:nth-child(2){margin-top:28px}
+.hero-img-card:nth-child(4){margin-top:28px}
+.hero-stats{display:flex;gap:2.5rem;margin-top:2.8rem;padding-top:2rem;border-top:1px solid var(--blush2)}
+.hero-stat-num{font-family:var(--ff-head);font-size:1.6rem;font-weight:900;color:var(--rose)}
+.hero-stat-label{font-size:.78rem;color:var(--muted);font-weight:600;margin-top:.1rem}
+
+/* ── MARQUEE ── */
+.marquee-strip{
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;padding:.7rem 0;overflow:hidden;white-space:nowrap;
+}
+.marquee-inner{display:inline-block;animation:marquee 22s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:inline-block;margin:0 2rem;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.marquee-dot{color:var(--rose-light);margin:0 .5rem}
+
+/* ── SECTIONS ── */
+.section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.sec-label{display:inline-block;background:var(--blush);color:var(--rose);padding:.28rem .9rem;border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
+.sec-title{font-family:var(--ff-head);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:var(--dark);line-height:1.15}
+.sec-title em{color:var(--rose);font-style:italic}
+.sec-sub{color:var(--muted);margin-top:.7rem;font-size:.95rem;max-width:460px}
+
+/* ── PRODUCT CARD ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.4rem}
+.p-card{
+  background:#fff;border-radius:20px;overflow:hidden;
+  border:1px solid #f5edf0;
+  transition:transform .28s,box-shadow .28s;cursor:pointer;
+}
+.p-card:hover{transform:translateY(-7px);box-shadow:0 18px 44px rgba(232,81,122,.15)}
+.p-img{position:relative;height:210px;overflow:hidden;background:#fdf3f6}
+.p-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.p-card:hover .p-img img{transform:scale(1.07)}
+.p-badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;font-size:.68rem;font-weight:800;padding:.22rem .65rem;
+  border-radius:100px;letter-spacing:.04em;text-transform:uppercase;
+}
+.p-badge.gold{background:linear-gradient(135deg,var(--gold),#b8882e)}
+.p-badge.new{background:linear-gradient(135deg,#7c5cbf,#5a3d99)}
+.p-wishlist{
+  position:absolute;top:10px;right:10px;z-index:2;
+  width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;transition:all .2s;
+}
+.p-wishlist:hover{background:var(--rose);color:#fff}
+.p-info{padding:1.1rem}
+.p-cat{font-size:.7rem;color:var(--rose);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem}
+.p-name{font-family:var(--ff-head);font-size:.98rem;font-weight:700;color:var(--dark);margin-bottom:.3rem;line-height:1.3}
+.p-desc{font-size:.78rem;color:var(--muted);margin-bottom:.8rem;line-height:1.5}
+.p-stars{color:#F5A623;font-size:.8rem;margin-bottom:.4rem}
+.p-foot{display:flex;align-items:center;justify-content:space-between}
+.p-price{font-family:var(--ff-head);font-size:1.15rem;font-weight:900;color:var(--rose)}
+.p-old{font-size:.78rem;color:var(--muted);text-decoration:line-through;margin-left:.3rem}
+.add-btn{
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;border:none;width:36px;height:36px;border-radius:50%;
+  font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(232,81,122,.4);transition:all .2s;
+}
+.add-btn:hover{transform:scale(1.1);box-shadow:0 6px 18px rgba(232,81,122,.55)}
+
+/* ── FILTERS ── */
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.fil{
+  background:#fff;border:1.5px solid #f0e5ea;color:var(--mid);
+  padding:.42rem 1.1rem;border-radius:100px;font-size:.83rem;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:var(--ff-body);
+}
+.fil.active,.fil:hover{background:linear-gradient(135deg,var(--rose),var(--rose-dark));border-color:var(--rose);color:#fff}
+
+/* ── BANNER ── */
+.banner{
+  background:linear-gradient(135deg,var(--rose-dark) 0%,var(--rose) 50%,#F07AA0 100%);
+  padding:3.5rem 2rem;text-align:center;margin:0;
+}
+.banner h2{font-family:var(--ff-head);font-size:2rem;font-weight:900;color:#fff;margin-bottom:.5rem}
+.banner p{color:rgba(255,255,255,.85);margin-bottom:1.5rem}
+.btn-white{background:#fff;color:var(--rose);border:none;padding:.8rem 2rem;border-radius:100px;font-family:var(--ff-body);font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
+
+/* ── CART ── */
+.cart-page{max-width:960px;margin:0 auto;padding:3rem 2rem}
+.cart-h{font-family:var(--ff-head);font-size:2.2rem;font-weight:900;color:var(--dark);margin-bottom:2rem}
+.cart-empty{text-align:center;padding:4rem 2rem}
+.cart-empty-icon{font-size:4rem;margin-bottom:1rem}
+.cart-layout{display:grid;grid-template-columns:1fr 340px;gap:2rem}
+.c-item{background:#fff;border-radius:18px;padding:1.2rem;display:flex;gap:1rem;align-items:center;margin-bottom:1rem;border:1px solid #f5edf0}
+.c-item-img{width:70px;height:70px;border-radius:14px;overflow:hidden;flex-shrink:0}
+.c-item-img img{width:100%;height:100%;object-fit:cover}
+.c-item-info{flex:1}
+.c-item-name{font-family:var(--ff-head);font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:.15rem}
+.c-item-price{color:var(--rose);font-weight:800;font-size:.95rem}
+.c-qty{display:flex;align-items:center;gap:.5rem;margin-top:.5rem}
+.q-btn{background:var(--blush);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;font-weight:700;color:var(--rose)}
+.q-btn:hover{background:var(--rose);color:#fff}
+.q-num{font-weight:700;font-size:.9rem;min-width:22px;text-align:center;color:var(--dark)}
+.rem-btn{background:none;border:none;color:#ddd;cursor:pointer;font-size:1rem;transition:color .2s;margin-left:.5rem}
+.rem-btn:hover{color:#e74c3c}
+.cart-summary{background:linear-gradient(160deg,var(--dark),#3a1e2e);border-radius:22px;padding:2rem;color:#fff;position:sticky;top:80px}
+.cs-title{font-family:var(--ff-head);font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;color:#fff}
+.cs-row{display:flex;justify-content:space-between;margin-bottom:.8rem;font-size:.9rem;color:#c8a8b8}
+.cs-row.total{border-top:1px solid rgba(255,255,255,.12);padding-top:1rem;margin-top:.5rem;font-family:var(--ff-head);font-size:1.25rem;font-weight:900;color:#fff}
+.checkout-btn{
+  width:100%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;border:none;padding:1rem;border-radius:100px;
+  font-family:var(--ff-head);font-size:1rem;font-weight:700;cursor:pointer;
+  margin-top:1.5rem;transition:all .2s;letter-spacing:.03em;
+  box-shadow:0 6px 20px rgba(232,81,122,.5);
+}
+.checkout-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(232,81,122,.6)}
+.cs-promo{display:flex;gap:.5rem;margin-top:1rem}
+.cs-promo input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:.6rem 1rem;border-radius:100px;font-family:var(--ff-body);font-size:.85rem;outline:none}
+.cs-promo input::placeholder{color:rgba(255,255,255,.4)}
+.cs-promo button{background:var(--rose);color:#fff;border:none;padding:.6rem 1.1rem;border-radius:100px;font-weight:700;font-size:.82rem;cursor:pointer}
+
+/* ── ABOUT ── */
+.about-hero-bg{
+  background:linear-gradient(135deg,#fff5f8,#fce8ef);
+  padding:5rem 2rem;text-align:center;
+}
+.about-story{max-width:780px;margin:0 auto;padding:4rem 2rem}
+.about-story p{color:var(--mid);line-height:1.9;font-size:1rem;margin-bottom:1.2rem}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;max-width:900px;margin:0 auto;padding:0 2rem 4rem}
+.val-card{background:#fff;border-radius:20px;padding:2rem;text-align:center;border:1px solid #f5edf0}
+.val-icon{font-size:2.2rem;margin-bottom:.8rem}
+.val-title{font-family:var(--ff-head);font-weight:700;font-size:1rem;color:var(--dark);margin-bottom:.4rem}
+.val-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1.4rem;max-width:900px;margin:0 auto;padding:0 2rem 4rem}
+.team-card{text-align:center}
+.team-av{
+  width:88px;height:88px;border-radius:50%;margin:0 auto .8rem;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--ff-head);font-size:1.6rem;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  box-shadow:0 6px 18px rgba(232,81,122,.35);
+}
+.team-name{font-family:var(--ff-head);font-weight:700;font-size:.95rem;color:var(--dark);margin-bottom:.2rem}
+.team-role{font-size:.78rem;color:var(--muted);font-weight:600}
+
+/* ── CONTACT ── */
+.contact-page{max-width:960px;margin:0 auto;padding:3rem 2rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.con-info h2{font-family:var(--ff-head);font-size:1.6rem;font-weight:900;margin-bottom:1.5rem;color:var(--dark)}
+.con-item{display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start}
+.con-icon{width:44px;height:44px;border-radius:12px;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.con-text strong{display:block;font-weight:700;font-size:.9rem;color:var(--dark);margin-bottom:.15rem}
+.con-text span{font-size:.83rem;color:var(--muted)}
+.con-form{background:#fff;border-radius:22px;padding:2rem;border:1px solid #f5edf0}
+.con-form h2{font-family:var(--ff-head);font-size:1.4rem;font-weight:900;margin-bottom:1.5rem;color:var(--dark)}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:.8rem;font-weight:700;color:var(--mid);margin-bottom:.35rem;letter-spacing:.03em}
+.fg input,.fg textarea,.fg select{
+  width:100%;padding:.7rem 1rem;border:1.5px solid #f0e5ea;
+  border-radius:12px;font-family:var(--ff-body);font-size:.88rem;color:var(--dark);
+  outline:none;transition:border .2s;background:#fff;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--rose)}
+.fg textarea{height:95px;resize:vertical}
+.sub-btn{
+  background:linear-gradient(135deg,var(--rose),var(--rose-dark));
+  color:#fff;border:none;padding:.85rem 2rem;border-radius:100px;
+  font-family:var(--ff-body);font-weight:700;font-size:.92rem;cursor:pointer;
+  width:100%;transition:all .2s;box-shadow:0 6px 18px rgba(232,81,122,.35);
+}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(232,81,122,.45)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;
+  background:linear-gradient(135deg,var(--dark),#3a1e2e);
+  color:#fff;padding:1rem 1.5rem;border-radius:14px;
+  font-size:.88rem;font-weight:600;
+  transform:translateY(100px);opacity:0;transition:all .32s;z-index:9999;
+  border-left:4px solid var(--rose);
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);color:#c8a8b8;padding:3.5rem 2rem 1.5rem;margin-top:4rem}
+.footer-wrap{max-width:1100px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.foot-brand .logo-main{font-size:1.6rem;margin-bottom:.6rem;display:block}
+.foot-brand p{font-size:.83rem;line-height:1.7;max-width:240px;margin-top:.5rem}
+.foot-col h4{font-family:var(--ff-head);font-weight:700;color:#fff;margin-bottom:1rem;font-size:.95rem}
+.foot-col a{display:block;color:#9a7a8a;font-size:.83rem;margin-bottom:.5rem;cursor:pointer;text-decoration:none;transition:color .2s}
+.foot-col a:hover{color:var(--rose-light)}
+.foot-bottom{text-align:center;padding-top:1.5rem;font-size:.78rem;color:#5a3a4a}
+
+/* ── PRODUCTS PAGE HEADER ── */
+.page-header{
+  background:linear-gradient(135deg,#fff5f8,#fce8ef);
+  padding:3.5rem 2rem;text-align:center;border-bottom:1px solid var(--blush2);
+}
+
+@media(max-width:750px){
+  .hero-imgs{display:none}
+  .contact-grid,.cart-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap" onclick="showPage('home')">
+    <div class="logo-icon"></div>
+    <div class="logo-text">
+      <span class="logo-main">Glowify</span>
+      <span class="logo-sub">Skincare Boutique</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('products')" id="nav-products">Shop</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="showPage('cart')">
+      🛒 Cart <span class="badge" id="cart-badge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-pill">🌸 New Collection 2025</div>
+      <h1>Glow Like You<br>Were Born to <em>Shine</em></h1>
+      <p>Premium skincare blended from nature's finest botanicals. Science-backed, cruelty-free, and made for every skin story.</p>
+      <div class="hero-btns">
+        <button class="btn-rose" onclick="showPage('products')">Shop the Collection</button>
+        <button class="btn-outline-rose" onclick="showPage('about')">Our Story</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">80K+</div><div class="hero-stat-label">Happy Skin ✨</div></div>
+        <div><div class="hero-stat-num">100%</div><div class="hero-stat-label">Clean Beauty</div></div>
+        <div><div class="hero-stat-num">4.9★</div><div class="hero-stat-label">Avg Rating</div></div>
+      </div>
+    </div>
+    <div class="hero-imgs">
+      <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1615397323214-cb9192ce3b16?w=300&h=320&fit=crop" alt="skincare model"></div>
+      <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=300&h=320&fit=crop" alt="serum"></div>
+      <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4a86134?w=300&h=320&fit=crop" alt="skincare"></div>
+      <div class="hero-img-card"><img src="https://images.unsplash.com/photo-1608248593802-8eb3a2a6136e?w=300&h=320&fit=crop" alt="cream"></div>
+    </div>
+  </div>
+
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-item">✦ Free Shipping Over $50</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Cruelty Free</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Dermatologist Tested</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">100% Vegan Formulas</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">30-Day Returns</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">✦ Free Shipping Over $50</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Cruelty Free</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">Dermatologist Tested</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">100% Vegan Formulas</span><span class="marquee-dot">·</span>
+      <span class="marquee-item">30-Day Returns</span><span class="marquee-dot">·</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="sec-label">Bestsellers</div>
+      <div class="sec-title">Fan <em>Favourites</em></div>
+      <div class="sec-sub" style="margin:0 auto">Products our community can't stop talking about.</div>
+    </div>
+    <div class="products-grid" id="featured-grid"></div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <button class="btn-rose" onclick="showPage('products')">View All Products →</button>
+    </div>
+  </div>
+
+  <div class="banner">
+    <h2>✨ Glow Starter Kit — 20% Off</h2>
+    <p>Get our 3 bestselling serums in one luxurious bundle. Limited stock.</p>
+    <button class="btn-white" onclick="showPage('products')">Grab the Kit</button>
+  </div>
+
+  <div class="section">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="sec-label">Why Glowify</div>
+      <div class="sec-title">Beauty You Can <em>Trust</em></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem">
+      <div class="val-card"><div class="val-icon">🌿</div><div class="val-title">Clean Ingredients</div><div class="val-desc">No parabens, sulfates, or artificial fragrance. Ever.</div></div>
+      <div class="val-card"><div class="val-icon">🔬</div><div class="val-title">Lab Verified</div><div class="val-desc">Every formula is clinically tested and dermatologist-approved.</div></div>
+      <div class="val-card"><div class="val-icon">🐰</div><div class="val-title">Cruelty-Free</div><div class="val-desc">100% vegan and never tested on animals. Always.</div></div>
+      <div class="val-card"><div class="val-icon">♻️</div><div class="val-title">Eco Packaging</div><div class="val-desc">Recyclable materials and carbon-neutral shipping.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS PAGE -->
+<div id="page-products" class="page">
+  <div class="page-header">
+    <div class="sec-label">All Products</div>
+    <div class="sec-title" style="margin-top:.4rem">The <em>Glow Collection</em></div>
+    <div class="sec-sub" style="margin:.5rem auto 0">Your complete skincare routine, all in one place.</div>
+  </div>
+  <div style="max-width:1200px;margin:0 auto;padding:3rem 2rem">
+    <div class="filters" id="filter-btns"></div>
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+</div>
+
+<!-- CART PAGE -->
+<div id="page-cart" class="page">
+  <div class="cart-page">
+    <div class="cart-h">Your Cart 🛒</div>
+    <div id="cart-content"></div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+  <div class="about-hero-bg">
+    <div class="sec-label">Our Story</div>
+    <div class="sec-title" style="margin-top:.4rem">Born from a Love of<br><em>Real, Radiant Skin</em></div>
+    <div class="sec-sub" style="margin:.8rem auto 0">Started in 2020 by a team of skin-obsessed scientists and beauty lovers. No fluff — just formulas that deliver.</div>
+  </div>
+  <div class="about-story">
+    <p>Glowify was born in a small lab in New York, where a biochemist and a beauty editor sat down and asked: <em>"Why does skincare have to be so complicated?"</em></p>
+    <p>We spent two years sourcing the finest botanicals from ethical farms across the globe — rose hip from Chile, bakuchiol from India, sea kelp from Norway — and pairing them with precision-engineered actives to create formulas that actually work.</p>
+    <p>Today, over 80,000 women trust Glowify as part of their daily ritual. We're proudly cruelty-free, vegan, and committed to sustainability in every step of our supply chain.</p>
+  </div>
+  <div class="values-grid">
+    <div class="val-card"><div class="val-icon">🌱</div><div class="val-title">Ethically Sourced</div><div class="val-desc">Partnering with farmers who respect the planet and their communities.</div></div>
+    <div class="val-card"><div class="val-icon">🔬</div><div class="val-title">Science Meets Nature</div><div class="val-desc">Every formula is developed with board-certified dermatologists.</div></div>
+    <div class="val-card"><div class="val-icon">💚</div><div class="val-title">Planet Positive</div><div class="val-desc">Carbon-neutral by 2026. 1% of revenue funds reforestation.</div></div>
+    <div class="val-card"><div class="val-icon">🤍</div><div class="val-title">For All Skin</div><div class="val-desc">Formulated for every tone, type, and texture. Inclusive always.</div></div>
+  </div>
+  <div style="text-align:center;padding:0 2rem 2rem"><div class="sec-label">Our Team</div><div class="sec-title" style="margin:.4rem 0 2rem">Meet the <em>Glow Gang</em></div></div>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-av">SL</div><div class="team-name">Sara Lee</div><div class="team-role">Founder & CEO</div></div>
+    <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,#7c5cbf,#5a3d99)">AK</div><div class="team-name">Amir Khan</div><div class="team-role">Head of R&D</div></div>
+    <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,#2ecc8a,#1a9966)">MJ</div><div class="team-name">Maya Jolie</div><div class="team-role">Chief Dermatologist</div></div>
+    <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,#D4A853,#b8882e)">RP</div><div class="team-name">Riya Patel</div><div class="team-role">Brand Director</div></div>
+    <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,#e07a5f,#c0533a)">ZM</div><div class="team-name">Zoe Martin</div><div class="team-role">Community Lead</div></div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page">
+  <div class="page-header">
+    <div class="sec-label">Say Hello</div>
+    <div class="sec-title" style="margin-top:.4rem">We'd Love to <em>Hear From You</em></div>
+    <div class="sec-sub" style="margin:.5rem auto 0">Questions, feedback, or just want to talk skincare? We're all ears.</div>
+  </div>
+  <div class="contact-page">
+    <div class="contact-grid">
+      <div class="con-info">
+        <h2>Get in Touch</h2>
+        <div class="con-item"><div class="con-icon">📍</div><div class="con-text"><strong>Our Studio</strong><span>42 Glow Street, Suite 8<br>New York, NY 10001</span></div></div>
+        <div class="con-item"><div class="con-icon">📧</div><div class="con-text"><strong>Email</strong><span>hello@glowify.co</span></div></div>
+        <div class="con-item"><div class="con-icon">📞</div><div class="con-text"><strong>Phone</strong><span>+1 (800) 456-GLOW<br>Mon–Fri, 9am–6pm EST</span></div></div>
+        <div class="con-item"><div class="con-icon">💬</div><div class="con-text"><strong>Live Chat</strong><span>Available on site. Avg reply: 3 mins</span></div></div>
+      </div>
+      <div class="con-form">
+        <h2>Send a Message 💌</h2>
+        <div class="fg"><label>Your Name</label><input type="text" placeholder="Jane Doe" id="cn"></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="jane@email.com" id="ce"></div>
+        <div class="fg"><label>Subject</label><select id="cs"><option>Order Inquiry</option><option>Product Question</option><option>Returns</option><option>Partnership</option><option>Other</option></select></div>
+        <div class="fg"><label>Message</label><textarea placeholder="Tell us how we can help..." id="cm"></textarea></div>
+        <button class="sub-btn" onclick="sendContact()">Send Message ✨</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO PAGES -->
+<div id="page-shipping" class="page">
+  <div class="page-header">
+    <div class="sec-label">Shipping Info</div>
+    <div class="sec-title" style="margin-top:.4rem">How We <em>Deliver</em></div>
+  </div>
+  <div class="about-story">
+    <h2>Domestic Shipping</h2>
+    <p>We offer FREE standard shipping on all orders over $50 within the US. Standard shipping usually takes 3-5 business days. Expedited options are available at checkout.</p>
+    <h2>International Shipping</h2>
+    <p>We ship worldwide! International shipping rates are calculated at checkout based on your location. Delivery typically takes 7-14 business days.</p>
+  </div>
+</div>
+
+<div id="page-returns" class="page">
+  <div class="page-header">
+    <div class="sec-label">Returns & Refunds</div>
+    <div class="sec-title" style="margin-top:.4rem">Our <em>Guarantee</em></div>
+  </div>
+  <div class="about-story">
+    <h2>30-Day Money Back Guarantee</h2>
+    <p>If you're not completely satisfied with your purchase, you can return it within 30 days for a full refund. Items must be at least half full to be eligible.</p>
+    <p>Please contact our support team to initiate a return, and we'll provide a prepaid shipping label.</p>
+  </div>
+</div>
+
+<div id="page-track" class="page">
+  <div class="page-header">
+    <div class="sec-label">Track Order</div>
+    <div class="sec-title" style="margin-top:.4rem">Where is my <em>Glow?</em></div>
+  </div>
+  <div class="about-story" style="text-align:center">
+    <p>Enter your order number to check the status of your shipment.</p>
+    <div style="max-width:400px; margin: 2rem auto; display:flex; gap: 0.5rem">
+        <input type="text" placeholder="Order #" style="flex:1; padding:0.8rem; border-radius:100px; border:1px solid #ddd; outline:none">
+        <button class="btn-rose" onclick="showToast('Tracking info will be sent to your email!')">Track</button>
+    </div>
+  </div>
+</div>
+
+<div id="page-faq" class="page">
+  <div class="page-header">
+    <div class="sec-label">FAQ</div>
+    <div class="sec-title" style="margin-top:.4rem">Common <em>Questions</em></div>
+  </div>
+  <div class="about-story">
+    <h2>Are your products cruelty-free?</h2>
+    <p>Yes, all Glowify products are 100% cruelty-free and never tested on animals. The majority of our line is also vegan.</p>
+    <h2>What is the shelf life of your products?</h2>
+    <p>Unopened products have a shelf life of 2 years. Once opened, we recommend using them within 12 months for maximum efficacy.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-grid">
+      <div class="foot-brand">
+        <span class="logo-main">Glowify</span>
+        <p>Science-backed, nature-inspired skincare for every skin story. Glow confidently, always.</p>
+      </div>
+      <div class="foot-col"><h4>Shop</h4><a onclick="showPage('products')">All Products</a><a onclick="showPage('products')">Serums</a><a onclick="showPage('products')">Moisturizers</a><a onclick="showPage('products')">SPF & Sun</a><a onclick="showPage('products')">Eye Care</a></div>
+      <div class="foot-col"><h4>Help</h4><a onclick="showPage('shipping')">Shipping Info</a><a onclick="showPage('returns')">Returns</a><a onclick="showPage('track')">Track Order</a><a onclick="showPage('faq')">FAQ</a></div>
+      <div class="foot-col"><h4>Company</h4><a onclick="showPage('about')">About Us</a><a onclick="showPage('contact')">Contact</a><a>Privacy Policy</a><a>Terms</a></div>
+    </div>
+    <div class="foot-bottom">© 2025 Glowify Skincare Boutique · Made with 🌸 for your skin</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- JS DATA AND LOGIC IN SEPARATE FILE TO KEEP HTML CLEAN -->
+<script src="script.js"></script>
+</body>
+</html>
